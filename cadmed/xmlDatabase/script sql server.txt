@@ -1,0 +1,93 @@
+CREATE TABLE Identificacao (
+  PacienteId INT IDENTITY(1,1) NOT NULL,
+  cpf INT NOT NULL,
+  nome VARCHAR(50) NULL,
+  rg VARCHAR(20) NULL,
+  nascimento DATE NULL,
+  estado_civil VARCHAR(20) NULL,
+  sexo CHAR(1) NULL,
+  naturalidade VARCHAR(50) NULL,
+  profissao VARCHAR(50) NULL,
+  cep VARCHAR(10) NULL,
+  logradouro VARCHAR(50) NULL,
+  complemento VARCHAR(20) NULL,
+  numero VARCHAR(20) NULL,
+  bairro VARCHAR(20) NULL,
+  uf CHAR(2) NULL,
+  cidade VARCHAR(20) NULL,
+  telefone1 INT NULL,
+  telefone2 INT NULL,
+  observacao VARCHAR(100) NULL,
+  email VARCHAR(50) NULL,
+  CONSTRAINT PK_PacienteId PRIMARY KEY(PacienteId)
+);
+
+
+CREATE TABLE Profissional (
+  idProfissional INT IDENTITY(1,1) NOT NULL,
+  Nome VARCHAR(20) NULL,
+  crm VARCHAR(20) NULL,
+  PRIMARY KEY(idProfissional)
+);
+
+CREATE TABLE InfoAdicionais (
+  InformacaoId INT IDENTITY(1,1) NOT NULL,
+  Identificacao_PacienteId INT NOT NULL,
+  cor VARCHAR(10) NULL,
+  tipoSanguineo VARCHAR(5) NULL,
+  peso FLOAT(10) NULL,
+  altura FLOAT(10) NULL,
+  reacoes VARCHAR(20) NULL,
+  nomePai VARCHAR(20) NULL,
+  nomeMae VARCHAR(20) NULL,
+  convenio VARCHAR(20) NULL,
+  CONSTRAINT PK_InformacaoId PRIMARY KEY(InformacaoId),
+  CONSTRAINT Fk_Identificacao_PacienteId FOREIGN KEY(InformacaoId)
+  REFERENCES InfoAdicionais (InformacaoId)
+);
+
+
+
+CREATE TABLE convenio (
+  ConvenioId INT IDENTITY(1,1) NOT NULL,
+  InfoAdicionais_InformacaoId INT NOT NULL,
+  nome VARCHAR(20) NOT NULL,
+  plano VARCHAR(20) NOT NULL,
+  numCarteira VARCHAR(20) NOT NULL,
+  validade DATE NULL,
+  CONSTRAINT PK_ConvenioId PRIMARY KEY(ConvenioId),
+  CONSTRAINT Fk_InfoAdicionais_InformacaoId FOREIGN KEY(ConvenioId)
+  REFERENCES convenio (ConvenioId)
+);
+
+
+
+CREATE TABLE HistoricoClinico (
+  HistoricoId INT IDENTITY(1,1) NOT NULL,
+  Profissional_idProfissional INT NOT NULL,
+  dataConsulta INT NULL,
+  Consulta VARCHAR(50) NULL,
+  Profissional VARCHAR(20) NULL,
+  CONSTRAINT PK_HistoricoId PRIMARY KEY(HistoricoId),
+  CONSTRAINT Fk_Profissional_idProfissional FOREIGN KEY(HistoricoId)
+  REFERENCES HistoricoClinico (HistoricoId)
+);
+
+
+CREATE TABLE Agendamento (
+  AgendamentoId INT IDENTITY(1,1) NOT NULL,
+  Profissional_idProfissional INT NOT NULL,
+  convenio_ConvenioId INT NOT NULL,
+  Identificacao_PacienteId INT NOT NULL,
+  dataAgendamento DATE NOT NULL,
+  hora TIME NULL,
+  profissional VARCHAR(20) NULL,
+  tipoAtendimento VARCHAR(20) NULL,
+  CONSTRAINT PK_AgendamentoId PRIMARY KEY(AgendamentoId),
+  CONSTRAINT Fk_Identificacao_PacienteId FOREIGN KEY(AgendamentoId)
+  REFERENCES Agendamento (AgendamentoId),
+  CONSTRAINT Fk_convenio_ConvenioId FOREIGN KEY(AgendamentoId)
+  REFERENCES Agendamento (AgendamentoId),
+  CONSTRAINT Fk_Profissional_idProfissional FOREIGN KEY(AgendamentoId)
+  REFERENCES Agendamento (AgendamentoId)
+);

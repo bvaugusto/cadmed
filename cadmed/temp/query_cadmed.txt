@@ -1,0 +1,45 @@
+
+INSERT INTO cadmed.identificacao 
+	(PacienteId, 
+	cpf, 
+	nome, 
+	email, 
+	rg, 
+	nascimento, 
+	estado_civil, 
+	sexo, 
+	naturalidade, 
+	profissao, 
+	cep, 
+	logradouro, 
+	complemento, 
+	bairro, 
+	uf, 
+	cidade, 
+	telefone1, 
+	telefone2, 
+	observacao
+	)
+	VALUES
+	('PacienteId', 
+	'cpf', 
+	'nome', 
+	'email', 
+	'rg', 
+	'nascimento', 
+	'estado_civil', 
+	'sexo', 
+	'naturalidade', 
+	'profissao', 
+	'cep', 
+	'logradouro', 
+	'complemento', 
+	'bairro', 
+	'uf', 
+	'cidade', 
+	'telefone1', 
+	'telefone2', 
+	'observacao'
+	);
+	
+	
